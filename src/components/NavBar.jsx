@@ -73,7 +73,7 @@ const NavBar = () => {
           textAlign: isMobile ? 'center' : 'left',
           padding: isMobile ? '2px 0' : '0'
         }}>
-          <span style={{ fontWeight: 'bold' }}>Welcome to ONYX Capital.</span> Business funding is what we do.
+          <span style={{ fontWeight: 'bold' }}>Welcome to ONYX Equity.</span> Business funding is what we do.
         </div>
         <div style={{ 
           display: 'flex', 
