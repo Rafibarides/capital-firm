@@ -121,7 +121,8 @@ const PrivacyPolicy = () => {
                 lineHeight: 1.7,
                 color: '#cccccc'
               }}>
-                Usage data including information about how you use our website and services.
+                "No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. Information sharing to subcontractors in support services, such as customer service, is permitted. All other use case categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.”
+
               </li>
             </ul>
           </section>
