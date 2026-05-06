@@ -169,8 +169,61 @@ const TermsOfService = () => {
             </p>
           </section>
           
-          {/* More sections would be added here for complete terms of service */}
+          <section>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '15px',
+              color: 'white'
+            }}>
+              5. Opt-Out & Support Mechanisms
+               </h2>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: '#cccccc'
+            }}>
+              “You can cancel the SMS service at any time. Just text "STOP" to the (305) 424-7992. After you send the SMS message "STOP" to us, we will send you an SMS message to confirm that you have been unsubscribed. After this, you will no longer receive SMS messages from us. If you want to join again, just sign up as you did the first time and we will start sending SMS messages to you again. If you are experiencing issues with the messaging program you can reply with the keyword HELP for more assistance, or you can get help directly at Admin@onyxequity.co.”
+            </p>
+          </section>
+
+          <section>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '15px',
+              color: 'white'
+            }}>
+              6. Carrier Liability Clause
+               </h2>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: '#cccccc'
+            }}>
+              "Carriers are not liable for delayed or undelivered messages."
+            </p>
+          </section>
           
+          <section>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '15px',
+              color: 'white'
+            }}>
+              7. Message Frequency Clause
+              </h2>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: '#cccccc'
+            }}>
+              “As always, message and data rates may apply for any messages sent to you from us and to us from you. If you have any questions about your text plan or data plan, it is best to contact your wireless provider.”
+            </p>
+          </section>
+
+              
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
