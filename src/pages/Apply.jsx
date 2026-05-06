@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import palette from '../styles/colors';
@@ -23,9 +23,12 @@ const Apply = () => {
     loanPurpose: '',
     comments: '',
     agreedToPolicy: false,
-    marketingSms: false,
+    smsNonMarketingConsent: false,
+    smsMarketingConsent: false,
     marketingEmail: false
   });
+
+  const BUSINESS_NAME = 'Onyx Equity';
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -53,40 +56,41 @@ const Apply = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.agreedToPolicy) {
-      alert("Please agree to the Privacy Policy to continue.");
-      return;
-    }
     setFormComplete(true);
     console.log("Form submitted:", formData);
   };
 
-  // Animation variants
-  const containerVariant = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1, 
-        delayChildren: 0.2 
+  const containerVariant = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.1,
+          delayChildren: 0.2
+        }
       }
-    }
-  };
+    }),
+    []
+  );
 
-  const itemVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
+  const itemVariant = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6 }
+      }
+    }),
+    []
+  );
 
   const renderFormStep = () => {
     switch(currentStep) {
       case 1:
         return (
-          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+          <motion.div variants={containerVariant} initial={false} animate="visible" className="form-step">
             <motion.h2 variants={itemVariant} style={stepTitleStyle}>Personal Information</motion.h2>
             <div style={gridStyle}>
               <motion.div variants={itemVariant}>
@@ -122,7 +126,7 @@ const Apply = () => {
         );
       case 2:
         return (
-          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+          <motion.div variants={containerVariant} initial={false} animate="visible" className="form-step">
             <motion.h2 variants={itemVariant} style={stepTitleStyle}>Business Information</motion.h2>
             <div style={gridStyle}>
               <motion.div variants={itemVariant}>
@@ -179,7 +183,7 @@ const Apply = () => {
         );
       case 3:
         return (
-          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+          <motion.div variants={containerVariant} initial={false} animate="visible" className="form-step">
             <motion.h2 variants={itemVariant} style={stepTitleStyle}>Funding Details</motion.h2>
             <div style={gridStyle}>
               <motion.div variants={itemVariant}>
@@ -225,14 +229,44 @@ const Apply = () => {
               <motion.div variants={itemVariant} style={{ gridColumn: isMobile ? 'auto' : '1 / span 2', marginTop: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div style={checkboxWrapperStyle}>
-                    <input type="checkbox" name="agreedToPolicy" id="agreedToPolicy" checked={formData.agreedToPolicy} onChange={handleInputChange} required style={checkboxStyle} />
+                    <input type="checkbox" name="agreedToPolicy" id="agreedToPolicy" checked={formData.agreedToPolicy} onChange={handleInputChange} style={checkboxStyle} />
                     <label htmlFor="agreedToPolicy" style={checkboxLabelStyle}>
-                      I agree to the <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>Privacy Policy</a> and consent to be contacted. <span style={{ color: palette.skyBlue }}>*</span>
+                      I agree to the{' '}
+                      <Link to="/legal/privacy-policy" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
+                        Privacy Policy
+                      </Link>{' '}
+                      and{' '}
+                      <Link to="/legal/terms-of-service" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
+                        Terms of Service
+                      </Link>
+                      .
                     </label>
                   </div>
                   <div style={checkboxWrapperStyle}>
-                    <input type="checkbox" name="marketingSms" id="marketingSms" checked={formData.marketingSms} onChange={handleInputChange} style={checkboxStyle} />
-                    <label htmlFor="marketingSms" style={checkboxLabelStyle}>I agree to receive SMS marketing updates and notifications.</label>
+                    <input
+                      type="checkbox"
+                      name="smsNonMarketingConsent"
+                      id="smsNonMarketingConsent"
+                      checked={formData.smsNonMarketingConsent}
+                      onChange={handleInputChange}
+                      style={checkboxStyle}
+                    />
+                    <label htmlFor="smsNonMarketingConsent" style={checkboxLabelStyle}>
+                      I consent to receive non-marketing text messages from <strong>{BUSINESS_NAME}</strong> about funding application updates and service notifications. Message frequency may vary, message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+                    </label>
+                  </div>
+                  <div style={checkboxWrapperStyle}>
+                    <input
+                      type="checkbox"
+                      name="smsMarketingConsent"
+                      id="smsMarketingConsent"
+                      checked={formData.smsMarketingConsent}
+                      onChange={handleInputChange}
+                      style={checkboxStyle}
+                    />
+                    <label htmlFor="smsMarketingConsent" style={checkboxLabelStyle}>
+                      I consent to receive marketing text messages, about special offers, discounts, and service updates, from <strong>{BUSINESS_NAME}</strong> at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+                    </label>
                   </div>
                   <div style={checkboxWrapperStyle}>
                     <input type="checkbox" name="marketingEmail" id="marketingEmail" checked={formData.marketingEmail} onChange={handleInputChange} style={checkboxStyle} />
@@ -354,6 +388,17 @@ const Apply = () => {
                 <button type={currentStep === 3 ? 'submit' : 'button'} onClick={currentStep < 3 ? nextStep : undefined} style={{ ...primaryButtonStyle, width: isMobile ? '100%' : 'auto' }}>
                   {currentStep === 3 ? 'Submit Application' : 'Continue'} <FaArrowRight />
                 </button>
+              </div>
+              <div style={{ marginTop: '18px', fontSize: '13px', color: '#cccccc', lineHeight: 1.4 }}>
+                By submitting this form you acknowledge you can review our{' '}
+                <Link to="/legal/privacy-policy" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
+                  Privacy Policy
+                </Link>{' '}
+                and{' '}
+                <Link to="/legal/terms-of-service" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
+                  Terms of Service
+                </Link>{' '}
+                before submission.
               </div>
             </form>
           ) : (
