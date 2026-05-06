@@ -20,17 +20,21 @@ const Apply = () => {
     yearsInBusiness: '',
     monthlyRevenue: '',
     loanAmount: '',
-    loanPurpose: ''
+    loanPurpose: '',
+    comments: '',
+    agreedToPolicy: false,
+    marketingSms: false,
+    marketingEmail: false
   });
-  
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     });
   };
-  
+
   const nextStep = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
@@ -39,34 +43,36 @@ const Apply = () => {
       setFormComplete(true);
     }
   };
-  
+
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  
-  // Handle form submission
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.agreedToPolicy) {
+      alert("Please agree to the Privacy Policy to continue.");
+      return;
+    }
     setFormComplete(true);
     console.log("Form submitted:", formData);
-    // Submit logic here
   };
-  
+
   // Animation variants
   const containerVariant = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.1, 
+        delayChildren: 0.2 
       }
     }
   };
-  
+
   const itemVariant = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -75,170 +81,62 @@ const Apply = () => {
       transition: { duration: 0.6 }
     }
   };
-  
-  // Form step display
+
   const renderFormStep = () => {
     switch(currentStep) {
       case 1:
         return (
-          <motion.div
-            variants={containerVariant}
-            initial="hidden"
-            animate="visible"
-            className="form-step"
-          >
-            <motion.h2 
-              variants={itemVariant}
-              style={{
-                fontSize: isMobile ? '24px' : '32px',
-                fontWeight: 'bold',
-                marginBottom: '20px',
-                color: palette.skyBlue,
-                textAlign: 'center'
-              }}
-            >
-              Personal Information
-            </motion.h2>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-              gap: '20px',
-              marginBottom: '20px'
-            }}>
+          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+            <motion.h2 variants={itemVariant} style={stepTitleStyle}>Personal Information</motion.h2>
+            <div style={gridStyle}>
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  First Name <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>First Name <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaUser style={iconStyle} />
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                    placeholder="John"
-                  />
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required style={inputStyle} placeholder="John" />
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Last Name <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Last Name <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaUser style={iconStyle} />
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                    placeholder="Doe"
-                  />
+                  <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required style={inputStyle} placeholder="Doe" />
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Email Address <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Email Address <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaEnvelope style={iconStyle} />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                    placeholder="john@example.com"
-                  />
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} required style={inputStyle} placeholder="john@example.com" />
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Phone Number <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Phone Number <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaPhone style={iconStyle} />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                    placeholder="(555) 555-5555"
-                  />
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required style={inputStyle} placeholder="(555) 555-5555" />
                 </div>
               </motion.div>
             </div>
           </motion.div>
         );
-        
       case 2:
         return (
-          <motion.div
-            variants={containerVariant}
-            initial="hidden"
-            animate="visible"
-            className="form-step"
-          >
-            <motion.h2 
-              variants={itemVariant}
-              style={{
-                fontSize: isMobile ? '24px' : '32px',
-                fontWeight: 'bold',
-                marginBottom: '20px',
-                color: palette.skyBlue,
-                textAlign: 'center'
-              }}
-            >
-              Business Information
-            </motion.h2>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-              gap: '20px',
-              marginBottom: '20px'
-            }}>
+          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+            <motion.h2 variants={itemVariant} style={stepTitleStyle}>Business Information</motion.h2>
+            <div style={gridStyle}>
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Business Name <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Business Name <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaBuilding style={iconStyle} />
-                  <input
-                    type="text"
-                    name="businessName"
-                    value={formData.businessName}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                    placeholder="Your Business Inc."
-                  />
+                  <input type="text" name="businessName" value={formData.businessName} onChange={handleInputChange} required style={inputStyle} placeholder="Your Business Inc." />
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Business Type <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Business Type <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaInfoCircle style={iconStyle} />
-                  <select
-                    name="businessType"
-                    value={formData.businessType}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                  >
+                  <select name="businessType" value={formData.businessType} onChange={handleInputChange} required style={inputStyle}>
                     <option value="">Select Type</option>
                     <option value="sole_proprietorship">Sole Proprietorship</option>
                     <option value="partnership">Partnership</option>
@@ -248,20 +146,11 @@ const Apply = () => {
                   </select>
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Years in Business <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Years in Business <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaInfoCircle style={iconStyle} />
-                  <select
-                    name="yearsInBusiness"
-                    value={formData.yearsInBusiness}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                  >
+                  <select name="yearsInBusiness" value={formData.yearsInBusiness} onChange={handleInputChange} required style={inputStyle}>
                     <option value="">Select Years</option>
                     <option value="less_than_1">Less than 1 year</option>
                     <option value="1_to_2">1-2 years</option>
@@ -271,20 +160,11 @@ const Apply = () => {
                   </select>
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Monthly Revenue <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Monthly Revenue <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaDollarSign style={iconStyle} />
-                  <select
-                    name="monthlyRevenue"
-                    value={formData.monthlyRevenue}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                  >
+                  <select name="monthlyRevenue" value={formData.monthlyRevenue} onChange={handleInputChange} required style={inputStyle}>
                     <option value="">Select Revenue</option>
                     <option value="less_than_10k">Less than $10,000</option>
                     <option value="10k_to_25k">$10,000 - $25,000</option>
@@ -297,47 +177,16 @@ const Apply = () => {
             </div>
           </motion.div>
         );
-        
       case 3:
         return (
-          <motion.div
-            variants={containerVariant}
-            initial="hidden"
-            animate="visible"
-            className="form-step"
-          >
-            <motion.h2 
-              variants={itemVariant}
-              style={{
-                fontSize: isMobile ? '24px' : '32px',
-                fontWeight: 'bold',
-                marginBottom: '20px',
-                color: palette.skyBlue,
-                textAlign: 'center'
-              }}
-            >
-              Funding Details
-            </motion.h2>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-              gap: '20px',
-              marginBottom: '20px'
-            }}>
+          <motion.div variants={containerVariant} initial="hidden" animate="visible" className="form-step">
+            <motion.h2 variants={itemVariant} style={stepTitleStyle}>Funding Details</motion.h2>
+            <div style={gridStyle}>
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Loan Amount <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Loan Amount <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaDollarSign style={iconStyle} />
-                  <select
-                    name="loanAmount"
-                    value={formData.loanAmount}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                  >
+                  <select name="loanAmount" value={formData.loanAmount} onChange={handleInputChange} required style={inputStyle}>
                     <option value="">Select Amount</option>
                     <option value="less_than_25k">Less than $25,000</option>
                     <option value="25k_to_50k">$25,000 - $50,000</option>
@@ -348,20 +197,11 @@ const Apply = () => {
                   </select>
                 </div>
               </motion.div>
-              
               <motion.div variants={itemVariant}>
-                <label style={labelStyle}>
-                  Loan Purpose <span style={{ color: palette.skyBlue }}>*</span>
-                </label>
+                <label style={labelStyle}>Loan Purpose <span style={{ color: palette.skyBlue }}>*</span></label>
                 <div style={inputContainerStyle}>
                   <FaInfoCircle style={iconStyle} />
-                  <select
-                    name="loanPurpose"
-                    value={formData.loanPurpose}
-                    onChange={handleInputChange}
-                    required
-                    style={inputStyle}
-                  >
+                  <select name="loanPurpose" value={formData.loanPurpose} onChange={handleInputChange} required style={inputStyle}>
                     <option value="">Select Purpose</option>
                     <option value="expansion">Business Expansion</option>
                     <option value="equipment">Equipment Purchase</option>
@@ -373,357 +213,148 @@ const Apply = () => {
                   </select>
                 </div>
               </motion.div>
-              
-              <motion.div 
-                variants={itemVariant}
-                style={{ gridColumn: isMobile ? 'auto' : '1 / span 2' }}
-              >
-                <label style={labelStyle}>
-                  Additional Comments
-                </label>
-                <div style={{
-                  ...inputContainerStyle,
-                  alignItems: 'flex-start',
-                  padding: '12px 16px',
-                }}>
-                  <FaInfoCircle style={{...iconStyle, marginTop: '10px'}} />
-                  <textarea
-                    name="comments"
-                    rows="5"
-                    style={{
-                      ...inputStyle,
-                      resize: 'vertical',
-                      padding: '8px 0'
-                    }}
-                    placeholder="Tell us more about your funding needs..."
-                  />
+              <motion.div variants={itemVariant} style={{ gridColumn: isMobile ? 'auto' : '1 / span 2' }}>
+                <label style={labelStyle}>Additional Comments</label>
+                <div style={{ ...inputContainerStyle, alignItems: 'flex-start', padding: '12px 16px' }}>
+                  <FaInfoCircle style={{ ...iconStyle, marginTop: '10px' }} />
+                  <textarea name="comments" rows="3" value={formData.comments} onChange={handleInputChange} style={{ ...inputStyle, resize: 'vertical', padding: '8px 0' }} placeholder="Tell us more about your funding needs..." />
+                </div>
+              </motion.div>
+
+              {/* Policy and Marketing Section */}
+              <motion.div variants={itemVariant} style={{ gridColumn: isMobile ? 'auto' : '1 / span 2', marginTop: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <div style={checkboxWrapperStyle}>
+                    <input type="checkbox" name="agreedToPolicy" id="agreedToPolicy" checked={formData.agreedToPolicy} onChange={handleInputChange} required style={checkboxStyle} />
+                    <label htmlFor="agreedToPolicy" style={checkboxLabelStyle}>
+                      I agree to the <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>Privacy Policy</a> and consent to be contacted. <span style={{ color: palette.skyBlue }}>*</span>
+                    </label>
+                  </div>
+                  <div style={checkboxWrapperStyle}>
+                    <input type="checkbox" name="marketingSms" id="marketingSms" checked={formData.marketingSms} onChange={handleInputChange} style={checkboxStyle} />
+                    <label htmlFor="marketingSms" style={checkboxLabelStyle}>I agree to receive SMS marketing updates and notifications.</label>
+                  </div>
+                  <div style={checkboxWrapperStyle}>
+                    <input type="checkbox" name="marketingEmail" id="marketingEmail" checked={formData.marketingEmail} onChange={handleInputChange} style={checkboxStyle} />
+                    <label htmlFor="marketingEmail" style={checkboxLabelStyle}>I agree to receive email marketing newsletters and offers.</label>
+                  </div>
                 </div>
               </motion.div>
             </div>
           </motion.div>
         );
-        
       default:
         return null;
     }
   };
-  
-  // Success screen
-  const renderSuccess = () => {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '40px 20px',
-          textAlign: 'center'
-        }}
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: [0, 1.2, 1] }}
-          transition={{ duration: 0.6, times: [0, 0.7, 1] }}
-          style={{
-            width: '120px',
-            height: '120px',
-            borderRadius: '60px',
-            backgroundColor: 'rgba(99, 216, 242, 0.15)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '30px'
-          }}
-        >
-          <FaCheckCircle size={60} color={palette.skyBlue} />
-        </motion.div>
-        
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          style={{
-            fontSize: '32px',
-            fontWeight: 'bold',
-            marginBottom: '20px',
-            color: 'white'
-          }}
-        >
-          Application Submitted!
-        </motion.h2>
-        
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          style={{
-            fontSize: '18px',
-            color: '#cccccc',
-            maxWidth: '600px',
-            marginBottom: '30px'
-          }}
-        >
-          Thank you for applying for funding with ONYX Equity. We've received your application and a funding specialist will contact you within 24 hours to discuss next steps.
-        </motion.p>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                backgroundColor: palette.skyBlue,
-                color: palette.darkBlue,
-                border: 'none',
-                borderRadius: '30px',
-                padding: '15px 30px',
-                fontWeight: 'bold',
-                fontSize: '16px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}
-            >
-              Return to Home <FaArrowRight />
-            </motion.button>
-          </Link>
-        </motion.div>
+
+  const renderSuccess = () => (
+    <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} style={successContainerStyle}>
+      <motion.div animate={{ scale: [0, 1.2, 1] }} style={successIconWrapperStyle}>
+        <FaCheckCircle size={60} color={palette.skyBlue} />
       </motion.div>
-    );
-  };
-  
-  // Styled components
-  const labelStyle = {
-    display: 'block',
-    marginBottom: '8px',
-    color: '#ffffff',
+      <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '20px' }}>Application Submitted!</h2>
+      <p style={{ fontSize: '18px', color: '#cccccc', maxWidth: '600px', marginBottom: '30px' }}>
+        Thank you for applying with ONYX Equity. A specialist will contact you within 24 hours.
+      </p>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={primaryButtonStyle}>
+          Return to Home <FaArrowRight />
+        </motion.button>
+      </Link>
+    </motion.div>
+  );
+
+  // Reusable Styles
+  const stepTitleStyle = {
+    fontSize: isMobile ? '24px' : '32px',
     fontWeight: 'bold',
-    fontSize: '14px'
-  };
-  
-  const inputContainerStyle = {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: '8px',
-    padding: '0 16px'
-  };
-  
-  const iconStyle = {
-    color: palette.darkBlue,
-    opacity: 0.6,
-    marginRight: '10px',
-    minWidth: '16px'
-  };
-  
-  const inputStyle = {
-    width: '100%',
-    padding: '12px 0',
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#333',
-    fontSize: '16px',
-    outline: 'none'
-  };
-  
-  // Progress indicator
-  const ProgressIndicator = () => {
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginBottom: '40px'
-      }}>
-        {[1, 2, 3].map((step) => (
-          <div key={step} style={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            <motion.div
-              initial={false}
-              animate={{
-                backgroundColor: step <= currentStep ? palette.skyBlue : 'rgba(255, 255, 255, 0.2)',
-                scale: step === currentStep ? 1.1 : 1
-              }}
-              whileHover={{ scale: 1.1 }}
-              onClick={() => step < currentStep && setCurrentStep(step)}
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: step <= currentStep ? palette.darkBlue : '#fff',
-                fontWeight: 'bold',
-                cursor: step < currentStep ? 'pointer' : 'default',
-                transition: 'all 0.3s ease',
-                boxShadow: step === currentStep ? '0 0 15px rgba(99, 216, 242, 0.7)' : 'none'
-              }}
-            >
-              {step}
-            </motion.div>
-            
-            {step < 3 && (
-              <div style={{
-                flex: 1,
-                height: '4px',
-                width: '80px',
-                backgroundColor: step < currentStep ? palette.skyBlue : 'rgba(255, 255, 255, 0.2)',
-                margin: '0 10px',
-                borderRadius: '2px',
-                transition: 'background-color 0.3s ease'
-              }} />
-            )}
-          </div>
-        ))}
-      </div>
-    );
+    marginBottom: '20px',
+    color: palette.skyBlue,
+    textAlign: 'center'
   };
 
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+    gap: '20px',
+    marginBottom: '20px'
+  };
+
+  const labelStyle = { display: 'block', marginBottom: '8px', color: '#ffffff', fontWeight: 'bold', fontSize: '14px' };
+  const inputContainerStyle = { position: 'relative', display: 'flex', alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', padding: '0 16px' };
+  const iconStyle = { color: palette.darkBlue, opacity: 0.6, marginRight: '10px', minWidth: '16px' };
+  const inputStyle = { width: '100%', padding: '12px 0', backgroundColor: 'transparent', border: 'none', color: '#333', fontSize: '16px', outline: 'none' };
+  
+  const checkboxWrapperStyle = { display: 'flex', alignItems: 'flex-start', gap: '12px' };
+  const checkboxStyle = { marginTop: '4px', cursor: 'pointer', width: '18px', height: '18px' };
+  const checkboxLabelStyle = { fontSize: '14px', color: '#cccccc', cursor: 'pointer', lineHeight: '1.4' };
+
+  const primaryButtonStyle = {
+    padding: '12px 30px',
+    backgroundColor: palette.skyBlue,
+    color: palette.darkBlue,
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px'
+  };
+
+  const successContainerStyle = { display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px', textAlign: 'center' };
+  const successIconWrapperStyle = { width: '120px', height: '120px', borderRadius: '60px', backgroundColor: 'rgba(99, 216, 242, 0.15)', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '30px' };
+
+  const ProgressIndicator = () => (
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+      {[1, 2, 3].map((step) => (
+        <div key={step} style={{ display: 'flex', alignItems: 'center' }}>
+          <motion.div
+            animate={{ backgroundColor: step <= currentStep ? palette.skyBlue : 'rgba(255, 255, 255, 0.2)', scale: step === currentStep ? 1.1 : 1 }}
+            onClick={() => step < currentStep && setCurrentStep(step)}
+            style={{
+              width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center',
+              color: step <= currentStep ? palette.darkBlue : '#fff', fontWeight: 'bold', cursor: step < currentStep ? 'pointer' : 'default',
+              boxShadow: step === currentStep ? '0 0 15px rgba(99, 216, 242, 0.7)' : 'none'
+            }}
+          >
+            {step}
+          </motion.div>
+          {step < 3 && <div style={{ height: '4px', width: '80px', backgroundColor: step < currentStep ? palette.skyBlue : 'rgba(255, 255, 255, 0.2)', margin: '0 10px', borderRadius: '2px' }} />}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
-    <div style={{
-      background: palette.darkBlue,
-      color: 'white',
-      width: '100%',
-      minHeight: '100vh',
-      position: 'relative',
-      overflow: 'hidden',
-      paddingBottom: '60px'
-    }}>
-      {/* Main Content */}
-      <div style={{
-        maxWidth: '1000px',
-        margin: '0 auto',
-        padding: isMobile ? '40px 20px' : '80px 40px',
-        position: 'relative',
-        zIndex: 5
-      }}>
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            fontSize: isMobile ? '36px' : '48px',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginBottom: '10px',
-            color: 'white'
-          }}
-        >
+    <div style={{ background: palette.darkBlue, color: 'white', width: '100%', minHeight: '100vh', paddingBottom: '60px' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: isMobile ? '40px 20px' : '80px 40px' }}>
+        <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} style={{ fontSize: isMobile ? '36px' : '48px', fontWeight: 'bold', textAlign: 'center', marginBottom: '10px' }}>
           Apply for Funding
         </motion.h1>
-        
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{
-            fontSize: '18px',
-            textAlign: 'center',
-            marginBottom: '40px',
-            color: '#cccccc',
-            maxWidth: '700px',
-            margin: '0 auto 40px'
-          }}
-        >
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ fontSize: '18px', textAlign: 'center', marginBottom: '40px', color: '#cccccc' }}>
           Complete the application below to get started with your business funding journey
         </motion.p>
-        
-        {/* Main Form Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '20px',
-            padding: isMobile ? '30px 20px' : '40px',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.2)',
-            position: 'relative',
-            zIndex: 10
-          }}
-        >
+
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '20px', padding: isMobile ? '30px 20px' : '40px', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
           {!formComplete ? (
             <form onSubmit={handleSubmit}>
               {!isMobile && <ProgressIndicator />}
-              
               {renderFormStep()}
-              
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginTop: '30px',
-                  flexDirection: isMobile ? 'column' : 'row',
-                  gap: isMobile ? '15px' : '0'
-                }}
-              >
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px', flexDirection: isMobile ? 'column' : 'row', gap: '15px' }}>
                 {currentStep > 1 && (
-                  <motion.button
-                    type="button"
-                    onClick={prevStep}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    style={{
-                      padding: '12px 25px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: 'white',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                      fontSize: '16px',
-                      order: isMobile ? 2 : 1
-                    }}
-                  >
+                  <button type="button" onClick={prevStep} style={{ ...primaryButtonStyle, backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)' }}>
                     Previous
-                  </motion.button>
+                  </button>
                 )}
-                
                 <div style={{ flex: 1 }} />
-                
-                <motion.button
-                  type={currentStep === 3 ? 'submit' : 'button'}
-                  onClick={currentStep < 3 ? nextStep : undefined}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{
-                    padding: '12px 30px',
-                    backgroundColor: palette.skyBlue,
-                    color: palette.darkBlue,
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    fontSize: '16px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    order: isMobile ? 1 : 2,
-                    width: isMobile ? '100%' : 'auto'
-                  }}
-                >
-                  {currentStep === 3 ? 'Submit Application' : 'Continue'} 
-                  <FaArrowRight />
-                </motion.button>
-              </motion.div>
+                <button type={currentStep === 3 ? 'submit' : 'button'} onClick={currentStep < 3 ? nextStep : undefined} style={{ ...primaryButtonStyle, width: isMobile ? '100%' : 'auto' }}>
+                  {currentStep === 3 ? 'Submit Application' : 'Continue'} <FaArrowRight />
+                </button>
+              </div>
             </form>
           ) : (
             renderSuccess()
