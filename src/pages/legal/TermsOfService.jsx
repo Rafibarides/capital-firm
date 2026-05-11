@@ -222,7 +222,24 @@ const TermsOfService = () => {
               “As always, message and data rates may apply for any messages sent to you from us and to us from you. If you have any questions about your text plan or data plan, it is best to contact your wireless provider.”
             </p>
           </section>
-
+          
+          <section>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '15px',
+              color: 'white'
+            }}>
+              8. Eligibility
+              </h2>
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: '#cccccc'
+            }}>
+              “You must be at least 18 years old to access or use our services. By submitting any form on this website, you represent and warrant that you are 18 years of age or older.”
+            </p>
+          </section>
               
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -237,10 +254,31 @@ const TermsOfService = () => {
               fontSize: '16px',
               lineHeight: 1.7,
               color: '#cccccc',
+              marginBottom: '15px'
+            }}>
+              If you have any questions regarding privacy, please read our privacy policy:{' '}
+  
+              <Link
+                to="/legal/privacy-policy"
+                style={{
+                  color: '#00bfff',
+                  textDecoration: 'underline',
+                  fontWeight: 'bold'
+                }}
+               >
+                Privacy Policy
+              </Link>
+            </p>
+
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: '#cccccc',
               marginBottom: '20px'
             }}>
               For questions about these Terms of Service, please contact us at:
             </p>
+            
             <div style={{
               padding: '20px',
               backgroundColor: 'rgba(255, 255, 255, 0.05)',
