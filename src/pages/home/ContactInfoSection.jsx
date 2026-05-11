@@ -5,7 +5,6 @@ import { FaPhone, FaMapMarkerAlt, FaEnvelope, FaPencilAlt, FaArrowRight } from '
 import waveBackground from '../../assets/wave.png';
 import palette from '../../styles/colors';
 import useResponsive from '../../hooks/useResponsive'; // Import the responsive hook
-import { Link } from 'react-router-dom';
 
 const ContactInfoSection = () => {
   const { isMobile, isTablet } = useResponsive();
