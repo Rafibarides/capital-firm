@@ -183,7 +183,7 @@ const ContactInfoSection = () => {
             overflow: 'hidden'
           }}>
             <iframe
-              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
+              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb?notrack=true"
               style={{
                 width: '100%',
                 height: '800px',
