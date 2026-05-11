@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { FaPhone, FaMapMarkerAlt, FaEnvelope, FaPencilAlt, FaArrowRight } from 'react-icons/fa';
@@ -9,6 +9,16 @@ import { Link } from 'react-router-dom';
 
 const ContactInfoSection = () => {
   const { isMobile, isTablet } = useResponsive();
+  useEffect(() => {
+  const script = document.createElement('script');
+  script.src = 'https://link.msgsndr.com/js/form_embed.js';
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
   
   // Contact info data
   const contactCards = [
@@ -165,32 +175,37 @@ const ContactInfoSection = () => {
             No really, why wait? Let's do this!
           </motion.p>
 
-          <Link to="/apply" style={{ textDecoration: 'none' }}>
-            <motion.button
-              variants={buttonVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              whileHover="hover"
-              whileTap="tap"
-              style={{ 
-                backgroundColor: palette.skyBlue,
-                color: palette.darkBlue,
+          <div style={{
+            width: '100%',
+            maxWidth: '760px',
+            marginTop: '20px',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            overflow: 'hidden'
+          }}>
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
+              style={{
+                width: '100%',
+                height: '745px',
                 border: 'none',
-                borderRadius: '50px',
-                padding: isMobile ? '12px 24px' : '15px 30px',
-                fontWeight: 'bold',
-                fontSize: isMobile ? '14px' : '16px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
+                borderRadius: '8px'
               }}
-            >
-              APPLY NOW
-            </motion.button>
-          </Link>
-        </div>
+              id="inline-e1NzKyt7uSDsAXgylKjb"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Form 0"
+              data-height="745"
+              data-layout-iframe-id="inline-e1NzKyt7uSDsAXgylKjb"
+              data-form-id="e1NzKyt7uSDsAXgylKjb"
+              title="Form 0"
+            />
+         </div>
 
         {/* Contact Cards - On mobile, use a horizontally scrollable container */}
         {isMobile ? (
