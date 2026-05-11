@@ -174,38 +174,32 @@ const ContactInfoSection = () => {
             No really, why wait? Let's do this!
           </motion.p>
 
-          <div style={{
-            width: '100%',
-            maxWidth: '760px',
-            height: '745px',
-            marginTop: '20px',
-            borderRadius: '8px',
-            overflow: 'hidden'
-          }}>
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
-              style={{
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                borderRadius: '8px'
-              }}
-              id="inline-e1NzKyt7uSDsAXgylKjb"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="Form 0"
-              data-height="745"
-              data-layout-iframe-id="inline-e1NzKyt7uSDsAXgylKjb"
-              data-form-id="e1NzKyt7uSDsAXgylKjb"
-              title="Form 0"
-            />
-          </div>
-         </div>
+          <div 
+            dangerouslySetInnerHTML={{
+              __html: `
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
+                  style="width:100%;height:800px;border:none;border-radius:8px"
+                  id="inline-e1NzKyt7uSDsAXgylKjb"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Form 0"
+                  data-height="800"
+                  data-layout-iframe-id="inline-e1NzKyt7uSDsAXgylKjb"
+                  data-form-id="e1NzKyt7uSDsAXgylKjb"
+                  title="Form 0"
+                ></iframe>
+
+                <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+              `
+            }}
+          />
+        </div>
 
         {/* Contact Cards - On mobile, use a horizontally scrollable container */}
         {isMobile ? (
