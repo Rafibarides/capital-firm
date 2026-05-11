@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import palette from '../../styles/colors';
 import useResponsive from '../../hooks/useResponsive';
+import { Link } from 'react-router-dom';
 
 const TermsOfService = () => {
   const { isMobile, isTablet } = useResponsive();

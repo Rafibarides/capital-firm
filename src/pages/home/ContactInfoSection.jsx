@@ -178,7 +178,7 @@ const ContactInfoSection = () => {
             width: '100%',
             maxWidth: '760px',
             marginTop: '20px',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
             overflow: 'hidden'
           }}>
@@ -186,7 +186,7 @@ const ContactInfoSection = () => {
               src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
               style={{
                 width: '100%',
-                height: '745px',
+                height: '800px',
                 border: 'none',
                 borderRadius: '8px'
               }}
