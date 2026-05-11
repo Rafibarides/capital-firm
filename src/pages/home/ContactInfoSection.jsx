@@ -205,6 +205,7 @@ const ContactInfoSection = () => {
               title="Form 0"
             />
          </div>
+        </div>
 
         {/* Contact Cards - On mobile, use a horizontally scrollable container */}
         {isMobile ? (
