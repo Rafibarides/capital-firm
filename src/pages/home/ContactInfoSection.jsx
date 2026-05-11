@@ -174,32 +174,27 @@ const ContactInfoSection = () => {
             No really, why wait? Let's do this!
           </motion.p>
 
-          <div 
-            dangerouslySetInnerHTML={{
-              __html: `
-                <iframe
-                  src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
-                  style="width:100%;height:800px;border:none;border-radius:8px"
-                  id="inline-e1NzKyt7uSDsAXgylKjb"
-                  data-layout="{'id':'INLINE'}"
-                  data-trigger-type="alwaysShow"
-                  data-trigger-value=""
-                  data-activation-type="alwaysActivated"
-                  data-activation-value=""
-                  data-deactivation-type="neverDeactivate"
-                  data-deactivation-value=""
-                  data-form-name="Form 0"
-                  data-height="800"
-                  data-layout-iframe-id="inline-e1NzKyt7uSDsAXgylKjb"
-                  data-form-id="e1NzKyt7uSDsAXgylKjb"
-                  title="Form 0"
-                ></iframe>
-
-                <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-              `
-            }}
-          />
-        </div>
+          <div style={{ marginTop: '30px' }}>
+            <a
+              href="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              <button style={{
+                backgroundColor: '#63d3f1',
+                color: '#04132b',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '16px 40px',
+                fontWeight: 'bold',
+                fontSize: '18px',
+                cursor: 'pointer'
+              }}>
+                Complete Application
+              </button>
+            </a>
+          </div>
 
         {/* Contact Cards - On mobile, use a horizontally scrollable container */}
         {isMobile ? (
