@@ -481,7 +481,6 @@ const ContactInfoSection = () => {
             ))}
           </motion.div>
         )}
-      </div>
     </section>
   );
 };
