@@ -177,16 +177,16 @@ const ContactInfoSection = () => {
           <div style={{
             width: '100%',
             maxWidth: '760px',
+            height: '745px',
             marginTop: '20px',
-            backgroundColor: 'transparent',
             borderRadius: '8px',
             overflow: 'hidden'
           }}>
             <iframe
-              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb?notrack=true"
+              src="https://api.leadconnectorhq.com/widget/form/e1NzKyt7uSDsAXgylKjb"
               style={{
                 width: '100%',
-                height: '800px',
+                height: '100%',
                 border: 'none',
                 borderRadius: '8px'
               }}
@@ -199,7 +199,7 @@ const ContactInfoSection = () => {
               data-deactivation-type="neverDeactivate"
               data-deactivation-value=""
               data-form-name="Form 0"
-              data-height="800"
+              data-height="745"
               data-layout-iframe-id="inline-e1NzKyt7uSDsAXgylKjb"
               data-form-id="e1NzKyt7uSDsAXgylKjb"
               title="Form 0"
