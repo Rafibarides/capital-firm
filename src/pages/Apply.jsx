@@ -228,20 +228,7 @@ const Apply = () => {
               {/* Policy and Marketing Section */}
               <motion.div variants={itemVariant} style={{ gridColumn: isMobile ? 'auto' : '1 / span 2', marginTop: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div style={checkboxWrapperStyle}>
-                    <input type="checkbox" name="agreedToPolicy" id="agreedToPolicy" checked={formData.agreedToPolicy} onChange={handleInputChange} style={checkboxStyle} />
-                    <label htmlFor="agreedToPolicy" style={checkboxLabelStyle}>
-                      I agree to the{' '}
-                      <Link to="/legal/privacy-policy" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
-                        Privacy Policy
-                      </Link>{' '}
-                      and{' '}
-                      <Link to="/legal/terms-of-service" style={{ color: palette.skyBlue, textDecoration: 'underline' }}>
-                        Terms of Service
-                      </Link>
-                      .
-                    </label>
-                  </div>
+                  
                   <div style={checkboxWrapperStyle}>
                     <input
                       type="checkbox"
@@ -268,10 +255,7 @@ const Apply = () => {
                       I consent to receive marketing text messages, about special offers, discounts, and service updates, from <strong>{BUSINESS_NAME}</strong> at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
                     </label>
                   </div>
-                  <div style={checkboxWrapperStyle}>
-                    <input type="checkbox" name="marketingEmail" id="marketingEmail" checked={formData.marketingEmail} onChange={handleInputChange} style={checkboxStyle} />
-                    <label htmlFor="marketingEmail" style={checkboxLabelStyle}>I agree to receive email marketing newsletters and offers.</label>
-                  </div>
+            
                 </div>
               </motion.div>
             </div>
